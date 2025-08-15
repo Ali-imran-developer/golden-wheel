@@ -19,6 +19,15 @@ const Navigation = () => {
     { name: "FAQ", path: "/faq" },
   ];
 
+  const mainNavItems = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Live Casino", path: "/live-casino" },
+    { name: "Sports", path: "/sports" },
+  ];
+
+  const mobileNavItems = navItems;
+
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -28,12 +37,12 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <Dice1 className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold text-primary">GoldenWheel</span>
+            <span className="text-xl font-bold text-primary">Beijing</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
+          <div className="hidden lg:flex items-center space-x-8">
+            {mainNavItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
@@ -49,34 +58,36 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link to="/login">
-              <Button variant="casino-outline" size="sm">
-                Login
-              </Button>
-            </Link>
-            <Link to="/register">
-              <Button variant="casino" size="sm">
-                Register
-              </Button>
-            </Link>
-          </div>
+          {/* Auth Buttons & Mobile Menu */}
+          <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
+              <Link to="/login">
+                <Button variant="casino-outline" size="sm">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button variant="casino" size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold">
+                  Sign Up
+                </Button>
+              </Link>
+            </div>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-md text-foreground hover:text-primary casino-transition"
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="lg:hidden p-2 rounded-md text-foreground hover:text-primary casino-transition"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-casino-dark rounded-lg mt-2 mb-4">
-              {navItems.map((item) => (
+              {mobileNavItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
@@ -98,8 +109,8 @@ const Navigation = () => {
                   </Button>
                 </Link>
                 <Link to="/register" onClick={() => setIsOpen(false)}>
-                  <Button variant="casino" size="sm" className="w-full">
-                    Register
+                  <Button variant="casino" size="sm" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold">
+                    Sign Up
                   </Button>
                 </Link>
               </div>
