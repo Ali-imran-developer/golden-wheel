@@ -18,6 +18,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				poppins: ['Poppins', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -51,6 +54,13 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				casino: {
+					gold: 'hsl(var(--casino-gold))',
+					'gold-bright': 'hsl(var(--casino-gold-bright))',
+					dark: 'hsl(var(--casino-dark))',
+					darker: 'hsl(var(--casino-darker))',
+					accent: 'hsl(var(--casino-accent))',
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',

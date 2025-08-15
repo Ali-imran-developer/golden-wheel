@@ -2,41 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Casino Design System - Black & Yellow Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    /* Casino Color Palette */
+    --background: 0 0% 5%;
+    --foreground: 48 100% 88%;
+    
+    --card: 0 0% 8%;
+    --card-foreground: 48 100% 88%;
+    
+    --popover: 0 0% 8%;
+    --popover-foreground: 48 100% 88%;
+    
+    /* Casino Yellow/Gold Primary */
+    --primary: 48 100% 50%;
+    --primary-foreground: 0 0% 5%;
+    
+    /* Dark Secondary */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 48 100% 88%;
+    
+    --muted: 0 0% 12%;
+    --muted-foreground: 48 20% 60%;
+    
+    /* Gold Accent */
+    --accent: 45 100% 60%;
+    --accent-foreground: 0 0% 5%;
+    
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 48 100% 88%;
+    
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 48 100% 50%;
+    
+    --radius: 0.75rem;
+    
+    /* Casino-specific Design Tokens */
+    --casino-gold: 45 100% 60%;
+    --casino-gold-bright: 48 100% 50%;
+    --casino-dark: 0 0% 8%;
+    --casino-darker: 0 0% 5%;
+    --casino-accent: 0 0% 12%;
+    
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(45 100% 60%), hsl(48 100% 50%));
+    --gradient-dark: linear-gradient(135deg, hsl(0 0% 8%), hsl(0 0% 5%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 5% / 0.9), hsl(0 0% 8% / 0.9));
+    
+    /* Shadows */
+    --shadow-gold: 0 10px 30px hsl(48 100% 50% / 0.3);
+    --shadow-card: 0 8px 25px hsl(0 0% 0% / 0.4);
+    --shadow-elegant: 0 20px 40px hsl(0 0% 0% / 0.5);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s ease-out;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +125,55 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-poppins;
+  }
+}
+
+@layer components {
+  /* Casino Component Styles */
+  .casino-gradient {
+    background: var(--gradient-gold);
+  }
+  
+  .casino-dark-gradient {
+    background: var(--gradient-dark);
+  }
+  
+  .casino-hero-gradient {
+    background: var(--gradient-hero);
+  }
+  
+  .casino-shadow {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .casino-shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .casino-shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .casino-transition {
+    transition: var(--transition-smooth);
+  }
+  
+  .casino-transition-fast {
+    transition: var(--transition-fast);
+  }
+  
+  /* Game Card Hover Effects */
+  .game-card {
+    @apply bg-card border border-border rounded-xl overflow-hidden casino-shadow casino-transition;
+  }
+  
+  .game-card:hover {
+    @apply transform scale-105 casino-shadow-gold;
+  }
+  
+  /* Casino Button Glow Effect */
+  .casino-glow {
+    @apply casino-shadow-gold animate-pulse;
   }
 }
