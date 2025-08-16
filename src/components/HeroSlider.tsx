@@ -12,7 +12,7 @@ const HeroSlider = () => {
   const slides = [
     {
       image: heroImage1,
-      title: "Welcome to GoldenWheel Casino",
+      title: "Welcome to Beijing Casino",
       subtitle: "Experience the Ultimate Gaming Thrill",
       description: "Join thousands of players in the most exciting online casino experience with premium games and massive jackpots.",
     },

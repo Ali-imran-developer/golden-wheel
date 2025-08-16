@@ -1,7 +1,11 @@
 import HeroSlider from "@/components/HeroSlider";
 import GameSlider from "@/components/GameSlider";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import blog1 from "@/assets/blog-1.jpg";
+import blog2 from "@/assets/blog-2.jpg";
+import blog3 from "@/assets/blog-3.jpg";
 import { Shield, Trophy, Clock, Headphones } from "lucide-react";
 
 const Home = () => {
@@ -33,25 +37,37 @@ const Home = () => {
       id: 1,
       title: "Mastering Blackjack: Basic Strategy Guide",
       excerpt: "Learn the fundamental strategies to improve your blackjack game and increase your winning chances.",
-      image: "/api/placeholder/400/250",
+      content: "Discover the complete guide to mastering blackjack with advanced strategies including card counting basics, bankroll management, and when to split, double down, or surrender.",
+      image: blog1,
       date: "Dec 15, 2024",
+      author: "Michael Chen",
       category: "Strategy",
+      readTime: "8 min read",
+      tags: ["Blackjack", "Strategy", "Card Games"],
     },
     {
       id: 2,
       title: "Top 5 Slot Games This Month",
       excerpt: "Discover the most popular and highest-paying slot games that players are loving right now.",
-      image: "/api/placeholder/400/250",
+      content: "Our comprehensive analysis of the top-performing slot games in 2024, featuring detailed RTP percentages, volatility ratings, and bonus features.",
+      image: blog2,
       date: "Dec 12, 2024",
+      author: "Sarah Williams",
       category: "Games",
+      readTime: "6 min read",
+      tags: ["Slots", "RTP", "Analysis"],
     },
     {
       id: 3,
       title: "Live Casino vs Traditional: What's Better?",
       excerpt: "Compare the exciting world of live dealer games with classic online casino experiences.",
-      image: "/api/placeholder/400/250",
+      content: "Explore the differences between live casino and traditional online gaming. From the social interaction with real dealers to the convenience of automated games.",
+      image: blog3,
       date: "Dec 10, 2024",
+      author: "Emma Rodriguez",
       category: "Live Casino",
+      readTime: "10 min read",
+      tags: ["Live Casino", "Comparison", "Gaming"],
     },
   ];
 
@@ -65,7 +81,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Welcome to GoldenWheel Casino
+              Welcome to Beijing Casino
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Experience the thrill of premium online gaming with our extensive collection of casino games, 
@@ -116,7 +132,13 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post) => (
               <Card key={post.id} className="game-card overflow-hidden">
-                <div className="aspect-video bg-casino-accent"></div>
+                <div className="aspect-video">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-3">
                     <span className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-semibold">
@@ -132,18 +154,22 @@ const Home = () => {
                   <p className="text-muted-foreground mb-4">
                     {post.excerpt}
                   </p>
-                  <Button variant="casino-ghost" size="sm">
-                    Read More →
-                  </Button>
+                  <Link to={`/blog/${post.id}`} state={{ post }}>
+                    <Button variant="casino-ghost" size="sm">
+                      Read More →
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             ))}
           </div>
 
           <div className="text-center mt-12">
-            <Button variant="casino-outline" size="lg">
-              View All Articles
-            </Button>
+            <Link to="/blogs">
+              <Button variant="casino-outline" size="lg">
+                View All Articles
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

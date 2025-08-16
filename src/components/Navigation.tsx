@@ -28,7 +28,7 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <Dice1 className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold text-primary">GoldenWheel</span>
+            <span className="text-xl font-bold text-primary">Beijing</span>
           </Link>
 
           {/* Desktop Navigation */}
