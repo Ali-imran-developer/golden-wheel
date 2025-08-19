@@ -37,8 +37,7 @@ const Footer = () => {
           {/* Logo and Description */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <Dice1 className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold text-primary">GoldenWheel</span>
+              <span className="text-xl font-bold text-primary">Baji Live</span>
             </Link>
             <p className="text-muted-foreground text-sm mb-4">
               Experience the thrill of premium online casino gaming with 
@@ -86,7 +85,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            © 2024 GoldenWheel Casino. All rights reserved.
+            © 2024 Baji Live Casino. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0 flex space-x-6">
             <Link

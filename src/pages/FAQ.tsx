@@ -16,12 +16,12 @@ const FAQ = () => {
 
   const faqData = [
     {
-      question: "How do I create an account at GoldenWheel Casino?",
+      question: "How do I create an account at Baji Live Casino?",
       answer: "Creating an account is simple and takes just a few minutes. Click the 'Register' button, fill in your personal details, verify your email address, and you're ready to start playing. Make sure to use accurate information as it will be needed for withdrawals.",
     },
     {
-      question: "Is it safe to play at GoldenWheel Casino?",
-      answer: "Absolutely! GoldenWheel Casino is fully licensed and regulated. We use state-of-the-art SSL encryption to protect all your personal and financial information. Our games are regularly audited for fairness by independent testing agencies.",
+      question: "Is it safe to play at Baji Live Casino?",
+      answer: "Absolutely! Baji Live Casino is fully licensed and regulated. We use state-of-the-art SSL encryption to protect all your personal and financial information. Our games are regularly audited for fairness by independent testing agencies.",
     },
     {
       question: "What payment methods do you accept?",
@@ -45,7 +45,7 @@ const FAQ = () => {
     },
     {
       question: "How can I contact customer support?",
-      answer: "Our customer support team is available 24/7 through live chat, email, and phone. You can access live chat directly from our website, email us at support@goldenwheel.com, or call our toll-free number. We typically respond to emails within 2-4 hours.",
+      answer: "Our customer support team is available 24/7 through live chat, email, and phone. You can access live chat directly from our website, email us at support@Baji Live.com, or call our toll-free number. We typically respond to emails within 2-4 hours.",
     },
     {
       question: "Are the games fair and random?",
@@ -53,7 +53,7 @@ const FAQ = () => {
     },
     {
       question: "What is the minimum age to play?",
-      answer: "You must be at least 18 years old (or the legal gambling age in your jurisdiction, whichever is higher) to create an account and play at GoldenWheel Casino. We strictly enforce age verification as part of our responsible gambling policy.",
+      answer: "You must be at least 18 years old (or the legal gambling age in your jurisdiction, whichever is higher) to create an account and play at Baji Live Casino. We strictly enforce age verification as part of our responsible gambling policy.",
     },
     {
       question: "Can I set limits on my account?",
@@ -74,7 +74,7 @@ const FAQ = () => {
             Frequently Asked Questions
           </h1>
           <p className="text-xl text-muted-foreground">
-            Find answers to common questions about GoldenWheel Casino
+            Find answers to common questions about Baji Live Casino
           </p>
         </div>
       </section>
@@ -136,7 +136,7 @@ const FAQ = () => {
                   </div>
                   <div className="text-center">
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="text-primary font-semibold">support@goldenwheel.com</p>
+                    <p className="text-primary font-semibold">support@Bajilive.com</p>
                   </div>
                   <div className="text-center">
                     <p className="text-sm text-muted-foreground">Phone</p>

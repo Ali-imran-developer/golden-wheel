@@ -33,7 +33,7 @@ const Login = () => {
             Welcome Back
           </h2>
           <p className="text-muted-foreground">
-            Sign in to your GoldenWheel account
+            Sign in to your Baji Live account
           </p>
         </div>
 

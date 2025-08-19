@@ -45,10 +45,10 @@ const About = () => {
       <section className="py-16 bg-casino-dark">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            About GoldenWheel Casino
+            About Baji Live Casino
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
-            Since 2020, GoldenWheel Casino has been the premier destination for online gaming enthusiasts. 
+            Since 2020, Baji Live Casino has been the premier destination for online gaming enthusiasts. 
             We combine cutting-edge technology with classic casino excitement to deliver an unparalleled 
             gaming experience to players worldwide.
           </p>
@@ -163,7 +163,7 @@ const About = () => {
               Our Gaming Ambassadors
             </h2>
             <p className="text-lg text-muted-foreground">
-              Meet the champions who represent the GoldenWheel community
+              Meet the champions who represent the Baji Live community
             </p>
           </div>
 
