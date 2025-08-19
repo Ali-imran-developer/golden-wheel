@@ -2,17 +2,21 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
-import heroImage1 from "@/assets/casino-hero-1.jpg";
-import heroImage2 from "@/assets/casino-hero-2.jpg";
-import heroImage3 from "@/assets/casino-hero-3.jpg";
+import heroImage1 from "/banner/banner1.jpg";
+import heroImage2 from "/banner/banner2.jpg";
+import heroImage3 from "/banner/banner3.jpg";
+import heroImage4 from "/banner/banner4.jpg";
+import heroImage5 from "/banner/banner5.jpg";
+import { useNavigate } from "react-router-dom";
 
 const HeroSlider = () => {
+  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
     {
       image: heroImage1,
-      title: "Welcome to Beijing Casino",
+      title: "Welcome to Baji Live Casino",
       subtitle: "Experience the Ultimate Gaming Thrill",
       description: "Join thousands of players in the most exciting online casino experience with premium games and massive jackpots.",
     },
@@ -27,6 +31,18 @@ const HeroSlider = () => {
       title: "Spin to Win Big",
       subtitle: "Jackpots Worth Millions",
       description: "Try your luck with our progressive jackpot games and become the next millionaire winner.",
+    },
+    {
+      image: heroImage4,
+      title: "Welcome to Baji Live Casino",
+      subtitle: "Experience the Ultimate Gaming Thrill",
+      description: "Join thousands of players in the most exciting online casino experience with premium games and massive jackpots.",
+    },
+    {
+      image: heroImage5,
+      title: "Live Casino Experience",
+      subtitle: "Real Dealers, Real Excitement",
+      description: "Immerse yourself in authentic casino atmosphere with professional dealers streaming live 24/7.",
     },
   ];
 
@@ -48,14 +64,8 @@ const HeroSlider = () => {
 
   return (
     <div className="relative h-[70vh] md:h-[80vh] overflow-hidden">
-      {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={cn(
-            "absolute inset-0 transition-opacity duration-1000",
-            index === currentSlide ? "opacity-100" : "opacity-0"
-          )}
-        >
+      {slides?.map((slide, index) => (
+        <div key={index} className={cn("absolute inset-0 transition-opacity duration-1000", index === currentSlide ? "opacity-100" : "opacity-0")}>
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${slide.image})` }}
@@ -74,11 +84,11 @@ const HeroSlider = () => {
                 {slide.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button variant="hero" size="xl" className="animate-fade-in">
+                <Button variant="hero" size="xl" className="animate-fade-in" onClick={() => navigate("/live-casino")}>
                   <Play className="mr-2 h-5 w-5" />
                   Play Now
                 </Button>
-                <Button variant="casino-outline" size="xl" className="animate-fade-in">
+                <Button variant="casino-outline" size="xl" className="animate-fade-in" onClick={() => navigate("/live-casino")}>
                   View Games
                 </Button>
               </div>
@@ -87,7 +97,6 @@ const HeroSlider = () => {
         </div>
       ))}
 
-      {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
         className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full casino-transition z-10"

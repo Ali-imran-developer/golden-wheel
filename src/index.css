@@ -1,33 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Casino Design System - Black & Yellow Theme */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
 @layer base {
   :root {
-    /* Casino Color Palette */
-    --background: 0 0% 5%;
-    --foreground: 48 100% 88%;
+    /* Casino Color Palette - Lighter Theme */
+    --background: 0 0% 12%;
+    --foreground: 48 100% 92%;
     
-    --card: 0 0% 8%;
-    --card-foreground: 48 100% 88%;
+    --card: 0 0% 16%;
+    --card-foreground: 48 100% 92%;
     
-    --popover: 0 0% 8%;
-    --popover-foreground: 48 100% 88%;
+    --popover: 0 0% 16%;
+    --popover-foreground: 48 100% 92%;
     
     /* Casino Yellow/Gold Primary */
     --primary: 48 100% 50%;
     --primary-foreground: 0 0% 5%;
     
     /* Dark Secondary */
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 48 100% 88%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 48 100% 92%;
     
-    --muted: 0 0% 12%;
-    --muted-foreground: 48 20% 60%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 48 25% 70%;
     
     /* Gold Accent */
     --accent: 45 100% 60%;
@@ -36,8 +36,8 @@
     --destructive: 0 75% 55%;
     --destructive-foreground: 48 100% 88%;
     
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --border: 0 0% 22%;
+    --input: 0 0% 22%;
     --ring: 48 100% 50%;
     
     --radius: 0.75rem;
@@ -45,14 +45,15 @@
     /* Casino-specific Design Tokens */
     --casino-gold: 45 100% 60%;
     --casino-gold-bright: 48 100% 50%;
-    --casino-dark: 0 0% 8%;
-    --casino-darker: 0 0% 5%;
-    --casino-accent: 0 0% 12%;
+    --casino-dark: 0 0% 16%;
+    --casino-darker: 0 0% 12%;
+    --casino-accent: 0 0% 18%;
     
     /* Gradients */
     --gradient-gold: linear-gradient(135deg, hsl(45 100% 60%), hsl(48 100% 50%));
-    --gradient-dark: linear-gradient(135deg, hsl(0 0% 8%), hsl(0 0% 5%));
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 5% / 0.9), hsl(0 0% 8% / 0.9));
+    --gradient-dark: linear-gradient(135deg, hsl(0 0% 16%), hsl(0 0% 12%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 12% / 0.9), hsl(0 0% 16% / 0.9));
+    --gradient-hero2: linear-gradient(135deg,hsl(0 0% 20% / 0.7), hsl(0 0% 28% / 0.7));
     
     /* Shadows */
     --shadow-gold: 0 10px 30px hsl(48 100% 50% / 0.3);
@@ -140,7 +141,7 @@
   }
   
   .casino-hero-gradient {
-    background: var(--gradient-hero);
+    background: var(--gradient-hero2);
   }
   
   .casino-shadow {

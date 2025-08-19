@@ -1,60 +1,63 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { cn } from "@/lib/utils";
-import gameSlots from "@/assets/game-slots.jpg";
-import gamePoker from "@/assets/game-poker.jpg";
-import gameBlackjack from "@/assets/game-blackjack.jpg";
-import gameRoulette from "@/assets/game-roulette.jpg";
+import moenyComing from "/games/game1.png";
+import piggyBank from "/games/game2.png";
+import kingsAce from "/games/game3.png";
+import superElements from "/games/game4.png";
+import wildBounty from "/games/game5.png";
+import moneyWheel from "/games/game6.png";
+import { useNavigate } from "react-router-dom";
 
 const GameSlider = () => {
+  const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const games = [
     {
       id: 1,
-      image: gameSlots,
-      title: "Golden Slots",
+      image: moenyComing,
+      title: "Moeny Coming",
       category: "Slots",
       rating: 4.8,
       players: "2.5K",
     },
     {
       id: 2,
-      image: gamePoker,
-      title: "Texas Hold'em",
+      image: piggyBank,
+      title: "Piggy Bank",
       category: "Poker",
       rating: 4.9,
       players: "1.8K",
     },
     {
       id: 3,
-      image: gameBlackjack,
-      title: "Classic Blackjack",
+      image: kingsAce,
+      title: "The King's Ace",
       category: "Table Games",
       rating: 4.7,
       players: "3.2K",
     },
     {
       id: 4,
-      image: gameRoulette,
-      title: "European Roulette",
+      image: superElements,
+      title: "Super Elements",
       category: "Roulette",
       rating: 4.8,
       players: "2.1K",
     },
     {
       id: 5,
-      image: gameSlots,
-      title: "Lucky Sevens",
+      image: wildBounty,
+      title: "Wild Bounty ShowDown",
       category: "Slots",
       rating: 4.6,
       players: "1.9K",
     },
     {
       id: 6,
-      image: gamePoker,
-      title: "Omaha Poker",
+      image: moneyWheel,
+      title: "Money Wheel",
       category: "Poker",
       rating: 4.7,
       players: "1.5K",
@@ -112,27 +115,29 @@ const GameSlider = () => {
               className="flex-shrink-0 w-80 game-card group cursor-pointer"
             >
               <div className="relative overflow-hidden rounded-t-xl">
-                <img
-                  src={game.image}
-                  alt={game.title}
-                  className="w-full h-48 object-cover group-hover:scale-110 casino-transition duration-700"
-                />
+                <div className="max-w-lg h-48" onClick={() => navigate("/live-casino")}>
+                  <img
+                    src={game.image}
+                    alt={game.title}
+                    className="w-full h-full object-cover group-hover:scale-110 casino-transition duration-700"
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 casino-transition">
                   <div className="absolute bottom-4 left-4 right-4">
-                    <Button variant="hero" size="sm" className="w-full">
+                    <Button variant="hero" size="sm" className="w-full" onClick={() => navigate("/live-casino")}>
                       Play Now
                     </Button>
                   </div>
                 </div>
-                <div className="absolute top-4 left-4">
+                {/* <div className="absolute top-4 left-4">
                   <span className="bg-primary text-primary-foreground px-2 py-1 rounded-full text-xs font-semibold">
                     {game.category}
                   </span>
-                </div>
+                </div> */}
               </div>
               
               <div className="p-6">
-                <h3 className="text-xl font-bold text-foreground mb-2">
+                <h3 className="text-xl font-bold text-foreground mb-2 hover:text-yellow-400" onClick={() => navigate("/live-casino")}>
                   {game.title}
                 </h3>
                 <div className="flex items-center justify-between">
@@ -152,7 +157,7 @@ const GameSlider = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button variant="casino" size="lg">
+          <Button variant="casino" size="lg" onClick={() => navigate("/live-casino")}>
             View All Games
           </Button>
         </div>
