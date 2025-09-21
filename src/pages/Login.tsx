@@ -1,28 +1,25 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import loginShcema from "@/validators/login-schema";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
+  const { handlePrimaryLogin, isLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
-  const validationSchema = Yup.object({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
-  });
-
-  const handleSubmit = (values: { email: string; password: string }) => {
-    console.log("Login form submitted:", values);
-    // Add your login logic here
+  const handleSubmit = async (values: { email: string; password: string }, { resetForm }: { resetForm: () => void }) => {
+    try{
+      await handlePrimaryLogin(values);
+      resetForm();
+    }catch(error: any){
+      console.log(error);
+    }
   };
 
   return (
@@ -44,12 +41,11 @@ const Login = () => {
           <CardContent>
             <Formik
               initialValues={{ email: "", password: "" }}
-              validationSchema={validationSchema}
+              validationSchema={loginShcema}
               onSubmit={handleSubmit}
             >
               {({ isSubmitting, values, setFieldValue }) => (
                 <Form className="space-y-6">
-                  {/* Email Field */}
                   <div>
                     <Label htmlFor="email" className="text-foreground">
                       Email Address
@@ -146,9 +142,9 @@ const Login = () => {
                     variant="hero"
                     size="lg"
                     className="w-full"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isLoading}
                   >
-                    {isSubmitting ? "Signing in..." : "Sign In"}
+                    {isLoading ? "Signing in..." : "Sign In"}
                   </Button>
 
                   {/* Divider */}

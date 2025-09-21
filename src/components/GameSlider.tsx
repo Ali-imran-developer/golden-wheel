@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import moenyComing from "/games/game1.png";
@@ -7,11 +7,22 @@ import kingsAce from "/games/game3.png";
 import superElements from "/games/game4.png";
 import wildBounty from "/games/game5.png";
 import moneyWheel from "/games/game6.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useGames } from "@/hooks/useGames";
+import { useSelector } from "react-redux";
+import { ensureArray } from "@/helper-functions/use-formater";
 
 const GameSlider = () => {
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { isLoading, handleGetGames } = useGames();
+  const { gamesList } = useSelector((state: any) => state.Games);
+  console.log("gamesList:", gamesList);
+
+  useEffect(() => {
+    handleGetGames();
+
+  }, [])
 
   const games = [
     {
@@ -104,29 +115,26 @@ const GameSlider = () => {
           </div>
         </div>
 
-        <div
-          ref={scrollRef}
-          className="flex space-x-6 overflow-x-auto scrollbar-hide pb-4"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {games.map((game) => (
-            <div
-              key={game.id}
-              className="flex-shrink-0 w-80 game-card group cursor-pointer"
-            >
+        <div ref={scrollRef} className="flex space-x-6 overflow-x-auto scrollbar-hide pb-4" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          {ensureArray(gamesList)?.map((game) => (
+            <div key={game?._id} className="flex-shrink-0 w-80 game-card group cursor-pointer">
               <div className="relative overflow-hidden rounded-t-xl">
-                <div className="max-w-lg h-48" onClick={() => navigate("/live-casino")}>
-                  <img
-                    src={game.image}
-                    alt={game.title}
-                    className="w-full h-full object-cover group-hover:scale-110 casino-transition duration-700"
-                  />
-                </div>
+                <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                  <div className="max-w-lg h-48">
+                    <img
+                      src={game?.image ?? ""}
+                      alt={game?.name ?? ""}
+                      className="w-full h-full object-cover group-hover:scale-110 casino-transition duration-700"
+                    />
+                  </div>
+                </Link>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 casino-transition">
                   <div className="absolute bottom-4 left-4 right-4">
-                    <Button variant="hero" size="sm" className="w-full" onClick={() => navigate("/live-casino")}>
-                      Play Now
-                    </Button>
+                    <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} target="_blank" rel="noopener noreferrer">
+                      <Button variant="hero" size="sm" className="w-full">
+                        Play Now
+                      </Button>
+                    </Link>
                   </div>
                 </div>
                 {/* <div className="absolute top-4 left-4">
@@ -137,9 +145,11 @@ const GameSlider = () => {
               </div>
               
               <div className="p-6">
-                <h3 className="text-xl font-bold text-foreground mb-2 hover:text-yellow-400" onClick={() => navigate("/live-casino")}>
-                  {game.title}
-                </h3>
+                <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} target="_blank" rel="noopener noreferrer">
+                  <h3 className="text-xl font-bold text-foreground mb-2 hover:text-yellow-400" onClick={() => navigate("/live-casino")}>
+                    {game?.name ?? ""}
+                  </h3>
+                </Link>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-1">
                     <Star className="h-4 w-4 text-primary fill-current" />
@@ -148,7 +158,7 @@ const GameSlider = () => {
                     </span>
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    {game.players} playing
+                    {game.users} playing
                   </div>
                 </div>
               </div>

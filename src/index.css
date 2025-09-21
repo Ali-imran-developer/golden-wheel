@@ -47,8 +47,11 @@
     --casino-gold: 45 100% 60%;
     --casino-gold-bright: 48 100% 50%;
     --casino-dark: 0 0% 16%;
-    --casino-darker: 0 0% 12%;
+    /* --casino-darker: 0 0% 12%; */
     --casino-accent: 0 0% 18%;
+    --casino-darker: 161 73% 39%;
+    /* --casino-header: 161 73% 39%; */
+    /* --casino-footer: 229 32% 10%; */
     
     /* Gradients */
     --gradient-gold: linear-gradient(135deg, hsl(45 100% 60%), hsl(48 100% 50%));

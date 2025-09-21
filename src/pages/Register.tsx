@@ -1,46 +1,30 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
+import signupSchema from "@/validators/signup-schema";
+import { useAuth } from "@/hooks/useAuth";
 
 const Register = () => {
+  const { handlePrimarySignup, isLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const validationSchema = Yup.object({
-    name: Yup.string()
-      .min(2, "Name must be at least 2 characters")
-      .required("Name is required"),
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
-    password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
-      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-      .matches(/[0-9]/, "Password must contain at least one number")
-      .required("Password is required"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password")], "Passwords must match")
-      .required("Please confirm your password"),
-    termsAccepted: Yup.boolean()
-      .oneOf([true], "You must accept the terms and conditions"),
-  });
-
-  const handleSubmit = (values: {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    termsAccepted: boolean;
-  }) => {
-    console.log("Register form submitted:", values);
-    // Add your registration logic here
+  const handleSubmit = async (
+    values: { userName: string; email: string; password: string; confirmPassword: string },
+    { resetForm }: { resetForm: () => void }
+  ) => {
+    const { userName, email, password } = values;
+    try {
+      await handlePrimarySignup({ userName, email, password });
+      resetForm();
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
   };
 
   return (
@@ -62,18 +46,16 @@ const Register = () => {
           <CardContent>
             <Formik
               initialValues={{
-                name: "",
+                userName: "",
                 email: "",
                 password: "",
                 confirmPassword: "",
-                termsAccepted: false,
               }}
-              validationSchema={validationSchema}
+              validationSchema={signupSchema}
               onSubmit={handleSubmit}
             >
               {({ isSubmitting, values, setFieldValue }) => (
                 <Form className="space-y-6">
-                  {/* Name Field */}
                   <div>
                     <Label htmlFor="name" className="text-foreground">
                       Full Name
@@ -82,25 +64,24 @@ const Register = () => {
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                       <Field
                         as={Input}
-                        id="name"
-                        name="name"
+                        id="userName"
+                        name="userName"
                         type="text"
                         placeholder="Enter your full name"
                         className="pl-10"
-                        value={values.name}
+                        value={values.userName}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setFieldValue("name", e.target.value)
+                          setFieldValue("userName", e.target.value)
                         }
                       />
                     </div>
                     <ErrorMessage
-                      name="name"
+                      name="userName"
                       component="div"
                       className="text-destructive text-sm mt-1"
                     />
                   </div>
 
-                  {/* Email Field */}
                   <div>
                     <Label htmlFor="email" className="text-foreground">
                       Email Address
@@ -205,14 +186,13 @@ const Register = () => {
                     />
                   </div>
 
-                  {/* Terms and Conditions */}
                   <div>
                     <div className="flex items-start">
                       <Field
                         type="checkbox"
                         name="termsAccepted"
                         className="h-4 w-4 text-primary focus:ring-primary border-border rounded mt-1"
-                        checked={values.termsAccepted}
+                        // checked={}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           setFieldValue("termsAccepted", e.target.checked)
                         }
@@ -252,9 +232,9 @@ const Register = () => {
                     variant="hero"
                     size="lg"
                     className="w-full"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isLoading}
                   >
-                    {isSubmitting ? "Creating Account..." : "Create Account"}
+                    {isLoading ? "Creating Account..." : "Create Account"}
                   </Button>
 
                   {/* Divider */}

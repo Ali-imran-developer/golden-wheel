@@ -1,56 +1,60 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import Home from "@/pages/Home";
-import About from "@/pages/About";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
-import FAQ from "@/pages/FAQ";
-import LiveCasino from "@/pages/LiveCasino";
-import Sports from "@/pages/Sports";
-import Tournaments from "@/pages/Tournaments";
-import Contact from "@/pages/Contact";
-import Blogs from "@/pages/Blogs";
-import BlogDetail from "@/pages/BlogDetail";
-import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
+import ProtectedRoute from "./config/ProtectedRoute";
+import { lazy, Suspense } from "react";
+import ClientLayout from "./pages/client/layout";
 
-const queryClient = new QueryClient();
+const Home = lazy(() => import("@/pages/Home"));
+const About = lazy(() => import("@/pages/About"));
+const Login = lazy(() => import("@/pages/Login"));
+const Register = lazy(() => import("@/pages/Register"));
+const FAQ = lazy(() => import("@/pages/FAQ"));
+const LiveCasino = lazy(() => import("@/pages/LiveCasino"));
+const Sports = lazy(() => import("@/pages/Sports"));
+const Tournaments = lazy(() => import("@/pages/Tournaments"));
+const Contact = lazy(() => import("@/pages/Contact"));
+const Blogs = lazy(() => import("@/pages/Blogs"));
+const BlogDetail = lazy(() => import("@/pages/BlogDetail"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+
+const AdminLayout = lazy(() => import("@/pages/admin/layout"));
+const AdminBlogs = lazy(() => import("@/pages/admin/blogs"));
+const AdminBlogDetail = lazy(() => import("@/pages/admin/blogs/blogs-detail"));
+const AdminBanners = lazy(() => import("@/pages/admin/banners"));
+const AdminGames = lazy(() => import("@/pages/admin/games"));
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <div className="min-h-screen flex flex-col">
-          <Navigation />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/live-casino" element={<LiveCasino />} />
-              <Route path="/sports" element={<Sports />} />
-              <Route path="/tournaments" element={<Tournaments />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/blogs" element={<Blogs />} />
-              <Route path="/blog/:id" element={<BlogDetail />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <BrowserRouter>
+    <ScrollToTop />
+        <Suspense fallback={<div className="p-8 text-center">Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<ProtectedRoute><ClientLayout /></ProtectedRoute>}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="live-casino" element={<LiveCasino />} />
+              <Route path="sports" element={<Sports />} />
+              <Route path="tournaments" element={<Tournaments />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="blogs" element={<Blogs />} />
+              <Route path="blogs/:id" element={<BlogDetail />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="faq" element={<FAQ />} />
+            </Route>
+
+            <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+              <Route path="blogs" element={<AdminBlogs />} />
+              <Route path="blogs/:id" element={<AdminBlogDetail />} />
+              <Route path="banners" element={<AdminBanners />} />
+              <Route path="games" element={<AdminGames />} />
+            </Route>
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+  </BrowserRouter>
 );
 
 export default App;

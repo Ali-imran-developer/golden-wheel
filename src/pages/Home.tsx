@@ -7,8 +7,21 @@ import blog1 from "@/assets/blog-1.jpg";
 import blog2 from "@/assets/blog-2.jpg";
 import blog3 from "@/assets/blog-3.jpg";
 import { Shield, Trophy, Clock, Headphones } from "lucide-react";
+import { useBlogs } from "@/hooks/useBlogs";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { ensureArray, formatDate } from "@/helper-functions/use-formater";
 
 const Home = () => {
+  const { isLoading, handleGetBlogs } = useBlogs();
+  const { blogsList } = useSelector((state: any) => state.Blogs);
+  console.log("blogsList:", blogsList);
+
+  useEffect(() => {
+    handleGetBlogs();
+
+  }, []);
+
   const features = [
     {
       icon: Shield,
@@ -113,10 +126,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Games Section */}
       <GameSlider />
 
-      {/* Blog Preview Section */}
       <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -129,31 +140,31 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <Card key={post.id} className="game-card overflow-hidden">
-                <div className="aspect-video">
-                  <img 
-                    src={post.image} 
-                    alt={post.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+            {ensureArray(blogsList)?.map((post) => (
+              <Card key={post?._id} className="game-card overflow-hidden">
+                <Link to={`/blogs/${post._id}`}>
+                  <div className="aspect-video">
+                    <img src={post?.images[0] ?? ""} alt={post?.heading ?? ""} className="w-full h-full object-cover" />
+                  </div>
+                </Link>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-3">
                     <span className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-semibold">
-                      {post.category}
+                      {post?.category ?? "Admin"}
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      {post.date}
+                      {formatDate(post?.createdAt) ?? ""}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold text-foreground mb-3">
-                    {post.title}
-                  </h3>
+                  <Link to={`/blogs/${post._id}`}>
+                    <h3 className="text-xl font-semibold text-foreground mb-3">
+                      {post?.heading ?? ""}
+                    </h3>
+                  </Link>
                   <p className="text-muted-foreground mb-4">
-                    {post.excerpt}
+                    {post?.description ?? ""}
                   </p>
-                  <Link to={`/blog/${post.id}`} state={{ post }}>
+                  <Link to={`/blogs/${post?._id}`}>
                     <Button variant="casino-ghost" size="sm">
                       Read More →
                     </Button>

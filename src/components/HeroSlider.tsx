@@ -7,39 +7,49 @@ import heroImage2 from "/banner/banner2.jpg";
 import heroImage3 from "/banner/banner3.jpg";
 import heroImage4 from "/banner/banner4.jpg";
 import heroImage5 from "/banner/banner5.jpg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useBanners } from "@/hooks/useBanners";
+import { useSelector } from "react-redux";
 
 const HeroSlider = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { isLoading, handleGetBanners } = useBanners();
+  const { bannersList } = useSelector((state: any) => state.Banners);
+  console.log("Banners List:", bannersList[0]?.images);
+
+  useEffect(() => {
+    handleGetBanners();
+
+  }, []);
 
   const slides = [
     {
-      image: heroImage1,
+      image: bannersList[0]?.images[0],
       title: "Welcome to Baji Live Casino",
       subtitle: "Experience the Ultimate Gaming Thrill",
       description: "Join thousands of players in the most exciting online casino experience with premium games and massive jackpots.",
     },
     {
-      image: heroImage2,
+      image: bannersList[0]?.images[1],
       title: "Live Casino Experience",
       subtitle: "Real Dealers, Real Excitement",
       description: "Immerse yourself in authentic casino atmosphere with professional dealers streaming live 24/7.",
     },
     {
-      image: heroImage3,
+      image: bannersList[0]?.images[2],
       title: "Spin to Win Big",
       subtitle: "Jackpots Worth Millions",
       description: "Try your luck with our progressive jackpot games and become the next millionaire winner.",
     },
     {
-      image: heroImage4,
+      image: bannersList[0]?.images[3],
       title: "Welcome to Baji Live Casino",
       subtitle: "Experience the Ultimate Gaming Thrill",
       description: "Join thousands of players in the most exciting online casino experience with premium games and massive jackpots.",
     },
     {
-      image: heroImage5,
+      image: bannersList[0]?.images[4],
       title: "Live Casino Experience",
       subtitle: "Real Dealers, Real Excitement",
       description: "Immerse yourself in authentic casino atmosphere with professional dealers streaming live 24/7.",
@@ -77,20 +87,22 @@ const HeroSlider = () => {
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 animate-fade-in">
                 {slide.title}
               </h1>
-              <h2 className="text-xl md:text-2xl lg:text-3xl text-primary font-semibold mb-6 animate-fade-in">
+              {/* <h2 className="text-xl md:text-2xl lg:text-3xl text-primary font-semibold mb-6 animate-fade-in">
                 {slide.subtitle}
-              </h2>
+              </h2> */}
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in">
                 {slide.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button variant="hero" size="xl" className="animate-fade-in" onClick={() => navigate("/live-casino")}>
+                <Button variant="casino-outline" size="xl" className="animate-fade-in" onClick={() => navigate("/live-casino")}>
                   <Play className="mr-2 h-5 w-5" />
                   Play Now
                 </Button>
-                <Button variant="casino-outline" size="xl" className="animate-fade-in" onClick={() => navigate("/live-casino")}>
-                  View Games
-                </Button>
+                <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                  <Button size="xl" className="animate-fade-in">
+                    Signup
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

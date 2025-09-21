@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Dice1 } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Navigation = () => {
@@ -41,29 +41,21 @@ const Navigation = () => {
 
           <div className="hidden lg:flex items-center space-x-8">
             {mainNavItems?.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={cn(
-                  "text-sm font-medium casino-transition hover:text-primary",
-                  isActive(item.path)
-                    ? "text-primary"
-                    : "text-muted-foreground"
-                )}
-              >
-                {item.name}
+              <Link key={item?.name} to={item?.path} className={cn("text-sm font-medium casino-transition hover:text-primary",
+                  isActive(item?.path) ? "text-primary" : "text-muted-foreground")}>
+                {item?.name}
               </Link>
             ))}
           </div>
 
           <div className="flex items-center space-x-4">
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/login">
+              <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} target="_blank" rel="noopener noreferrer">
                 <Button variant="casino-outline" size="lg">
                   Login
                 </Button>
               </Link>
-              <Link to="/register">
+              <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} target="_blank" rel="noopener noreferrer">
                 <Button variant="casino" size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold animate-bounce">
                   Sign Up
                 </Button>
