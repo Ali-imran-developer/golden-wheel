@@ -16,7 +16,7 @@ export const useAuth = () => {
       AuthController.set({ profile: data?.user });
       toast.success(data?.message);
       if(data?.user?.role === "admin"){
-        navigate("/admin");
+        navigate("/admin/blogs");
       }else{
         navigate("/");
       };

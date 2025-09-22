@@ -24,6 +24,7 @@ const AdminBlogs = lazy(() => import("@/pages/admin/blogs"));
 const AdminBlogDetail = lazy(() => import("@/pages/admin/blogs/blogs-detail"));
 const AdminBanners = lazy(() => import("@/pages/admin/banners"));
 const AdminGames = lazy(() => import("@/pages/admin/games"));
+const AuthLogin = lazy(() => import("@/pages/Login"));
 
 const App = () => (
   <BrowserRouter>
@@ -51,6 +52,7 @@ const App = () => (
               <Route path="games" element={<AdminGames />} />
             </Route>
 
+            <Route path="/auth/login" element={<AuthLogin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
