@@ -5,6 +5,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ProtectedRoute from "./config/ProtectedRoute";
 import { lazy, Suspense } from "react";
 import ClientLayout from "./pages/client/layout";
+import MainLoader from "./components/ui/loader";
 
 const Home = lazy(() => import("@/pages/Home"));
 const About = lazy(() => import("@/pages/About"));
@@ -29,7 +30,7 @@ const AuthLogin = lazy(() => import("@/pages/Login"));
 const App = () => (
   <BrowserRouter>
     <ScrollToTop />
-        <Suspense fallback={<div className="p-8 text-center">Loading...</div>}>
+        <Suspense fallback={<MainLoader className="bg-black" />}>
           <Routes>
             <Route path="/" element={<ProtectedRoute><ClientLayout /></ProtectedRoute>}>
               <Route index element={<Home />} />
