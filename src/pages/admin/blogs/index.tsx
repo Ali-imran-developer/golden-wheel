@@ -3,12 +3,26 @@ import { Link } from "react-router-dom";
 import CreateBlog from "./create-blogs";
 import { useBlogs } from "@/hooks/useBlogs";
 import { useSelector } from "react-redux";
-import { ArrowRight, Calendar, Loader2 } from "lucide-react";
+import { ArrowRight, Calendar, Pencil, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { ensureArray, formatDate } from "@/helper-functions/use-formater";
 
 const Blogs = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoading, handleGetBlogs } = useBlogs();
+  const [selectedBlog, setSelectedBlog] = useState<any | null>(null);
+  const { isLoading, handleGetBlogs, handleDeleteBlogs } = useBlogs();
   const { blogsList } = useSelector((state: any) => state.Blogs);
 
   useEffect(() => {
@@ -20,13 +34,30 @@ const Blogs = () => {
       <div className="p-6 flex-1 bg-gray-50">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-black">Blogs</h1>
-          <button onClick={() => setIsOpen(true)} className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+          <Button onClick={() => { setSelectedBlog(null); setIsOpen(true); }} className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
             Create Blog
-          </button>
+          </Button>
         </div>
         {isLoading ? (
-          <div className="flex justify-center items-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-gray-500" />
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <div key={idx} className="bg-white rounded-lg shadow-lg overflow-hidden">
+                  <Skeleton className="w-full h-48" />
+                  <div className="p-6 space-y-3">
+                    <Skeleton className="h-4 w-24" />
+                    <Skeleton className="h-6 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
+                    <div className="flex gap-2">
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-20" />
+                    </div>
+                    <Skeleton className="h-4 w-20" />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ) : !ensureArray(blogsList) || ensureArray(blogsList)?.length === 0 ? (
           <p className="text-center text-gray-500 py-20">No blogs added</p>
@@ -35,16 +66,48 @@ const Blogs = () => {
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {ensureArray(blogsList)?.map((post) => (
-                  <article key={post?._id} className="bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:-translate-y-2">
-                    <Link to={`/admin/blogs/${post?._id}`}>
-                      <div className="relative overflow-hidden">
+                  <article key={post?._id} className="bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:-translate-y-2 relative">
+                    <div className="relative overflow-hidden">
+                      <Link to={`/admin/blogs/${post?._id}`}>
                         <img
                           src={post?.images?.[0]}
                           alt={post?.heading}
                           className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                         />
+                      </Link>
+                      <div className="absolute top-2 right-2 flex gap-2">
+                        <Button size="icon" variant="secondary" className="rounded-full" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSelectedBlog(post); setIsOpen(true); }}>
+                          <Pencil className="w-4 h-4" />
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button 
+                              size="icon" 
+                              variant="destructive" 
+                              className="rounded-full"
+                              onClick={() => console.log("Trash button clicked")}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Delete blog?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete this blog.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => {
+                                  console.log("Delete button clicked for blog:", post?._id);
+                                  handleDeleteBlogs(post?._id);
+                                }}>Delete</AlertDialogAction>
+                              </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </div>
-                    </Link>
+                    </div>
 
                     <div className="p-6">
                       <div className="flex items-center text-sm text-gray-500 mb-3">
@@ -102,7 +165,7 @@ const Blogs = () => {
         )}
       </div>
       <CreateBlog 
-        initialData={{}} 
+        initialData={selectedBlog} 
         open={isOpen} 
         onOpenChange={setIsOpen}
       />

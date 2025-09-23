@@ -10,6 +10,9 @@ import {
   Star,
   StarOffIcon,
   User2,
+  Home,
+  Trophy,
+  Goal,
 } from "lucide-react";
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -17,6 +20,12 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { ensureArray } from "@/helper-functions/use-formater";
 
 const adminSidebarMenuItems = [
+  {
+    id: "welcome",
+    label: "Welcome",
+    path: "/admin/welcome",
+    icon: <Home />,
+  },
   {
     id: "blogs",
     label: "Blogs",
@@ -35,6 +44,18 @@ const adminSidebarMenuItems = [
     path: "/admin/games",
     icon: <Gamepad2 />,
   },
+  {
+    id: "sports",
+    label: "Sports",
+    path: "/admin/sports",
+    icon: <Trophy />,
+  },
+  {
+    id: "tournaments",
+    label: "Tournaments",
+    path: "/admin/tournaments",
+    icon: <Goal />,
+  },
 ];
 
 function MenuItems({ setOpen }) {
@@ -47,7 +68,7 @@ function MenuItems({ setOpen }) {
         const isActive = location.pathname === menuItem.path;
 
         return (
-          <div key={menuItem.id} className={`flex cursor-pointer text-xl text-black items-center gap-2 rounded-md px-3 py-2 ${isActive ? "bg-gray-900 font-semibold !text-white"  : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
+          <div key={menuItem.id} className={`flex cursor-pointer text-xl !text-gray-500 hover:text-white items-center gap-2 rounded-md px-3 py-2 ${isActive ? "bg-gray-900 font-semibold !text-white"  : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
             onClick={() => { navigate(menuItem.path); setOpen ? setOpen(false) : null; }}>
             {menuItem?.icon}
             <span>{menuItem?.label}</span>

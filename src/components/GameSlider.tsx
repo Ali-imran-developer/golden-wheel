@@ -1,12 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import moenyComing from "/games/game1.png";
-import piggyBank from "/games/game2.png";
-import kingsAce from "/games/game3.png";
-import superElements from "/games/game4.png";
-import wildBounty from "/games/game5.png";
-import moneyWheel from "/games/game6.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useGames } from "@/hooks/useGames";
 import { useSelector } from "react-redux";
@@ -17,63 +12,11 @@ const GameSlider = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { isLoading, handleGetGames } = useGames();
   const { gamesList } = useSelector((state: any) => state.Games);
-  console.log("gamesList:", gamesList);
 
   useEffect(() => {
     handleGetGames();
 
   }, [])
-
-  const games = [
-    {
-      id: 1,
-      image: moenyComing,
-      title: "Moeny Coming",
-      category: "Slots",
-      rating: 4.8,
-      players: "2.5K",
-    },
-    {
-      id: 2,
-      image: piggyBank,
-      title: "Piggy Bank",
-      category: "Poker",
-      rating: 4.9,
-      players: "1.8K",
-    },
-    {
-      id: 3,
-      image: kingsAce,
-      title: "The King's Ace",
-      category: "Table Games",
-      rating: 4.7,
-      players: "3.2K",
-    },
-    {
-      id: 4,
-      image: superElements,
-      title: "Super Elements",
-      category: "Roulette",
-      rating: 4.8,
-      players: "2.1K",
-    },
-    {
-      id: 5,
-      image: wildBounty,
-      title: "Wild Bounty ShowDown",
-      category: "Slots",
-      rating: 4.6,
-      players: "1.9K",
-    },
-    {
-      id: 6,
-      image: moneyWheel,
-      title: "Money Wheel",
-      category: "Poker",
-      rating: 4.7,
-      players: "1.5K",
-    },
-  ];
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -116,54 +59,66 @@ const GameSlider = () => {
         </div>
 
         <div ref={scrollRef} className="flex space-x-6 overflow-x-auto scrollbar-hide pb-4" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-          {ensureArray(gamesList)?.map((game) => (
-            <div key={game?._id} className="flex-shrink-0 w-80 game-card group cursor-pointer">
-              <div className="relative overflow-hidden rounded-t-xl">
-                <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-                  <div className="max-w-lg h-48">
-                    <img
-                      src={game?.image ?? ""}
-                      alt={game?.name ?? ""}
-                      className="w-full h-full object-cover group-hover:scale-110 casino-transition duration-700"
-                    />
-                  </div>
-                </Link>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 casino-transition">
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} target="_blank" rel="noopener noreferrer">
-                      <Button variant="hero" size="sm" className="w-full">
-                        Play Now
-                      </Button>
-                    </Link>
-                  </div>
+          {isLoading ? (
+            Array.from({ length: 8 }).map((_, idx) => (
+              <div key={idx} className="flex-shrink-0 w-80 game-card">
+                <div className="relative overflow-hidden rounded-t-xl">
+                  <Skeleton className="w-full h-48" />
                 </div>
-                {/* <div className="absolute top-4 left-4">
-                  <span className="bg-primary text-primary-foreground px-2 py-1 rounded-full text-xs font-semibold">
-                    {game.category}
-                  </span>
-                </div> */}
-              </div>
-              
-              <div className="p-6">
-                <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} target="_blank" rel="noopener noreferrer">
-                  <h3 className="text-xl font-bold text-foreground mb-2 hover:text-yellow-400" onClick={() => navigate("/live-casino")}>
-                    {game?.name ?? ""}
-                  </h3>
-                </Link>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-1">
-                    <Star className="h-4 w-4 text-primary fill-current" />
-                    <span className="text-sm font-medium text-foreground">
-                      {game.rating}
-                    </span>
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {game.users} playing
+                <div className="p-6 space-y-3">
+                  <Skeleton className="h-6 w-3/4" />
+                  <div className="flex items-center justify-between">
+                    <Skeleton className="h-4 w-16" />
+                    <Skeleton className="h-4 w-20" />
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            ensureArray(gamesList)?.map((game) => (
+              <div key={game?._id} className="flex-shrink-0 w-80 game-card group cursor-pointer">
+                <div className="relative overflow-hidden rounded-t-xl">
+                  <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} className="cursor-pointer">
+                    <div className="max-w-lg h-48">
+                      <img
+                        src={game?.image ?? ""}
+                        alt={game?.name ?? ""}
+                        className="w-full h-full object-cover group-hover:scale-110 casino-transition duration-700"
+                      />
+                    </div>
+                  </Link>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 casino-transition">
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`}>
+                        <Button variant="hero" size="sm" className="w-full">
+                          Play Now
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`}>
+                    <h3 className="text-xl font-bold text-foreground mb-2 hover:text-yellow-400" onClick={() => navigate("/live-casino")}>
+                      {game?.name ?? ""}
+                    </h3>
+                  </Link>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-1">
+                      <Star className="h-4 w-4 text-primary fill-current" />
+                      <span className="text-sm font-medium text-foreground">
+                        {game.rating}
+                      </span>
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {game.users} playing
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
 
         <div className="text-center mt-12">

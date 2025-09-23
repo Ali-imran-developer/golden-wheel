@@ -24,8 +24,24 @@ export const useBanners = () => {
     }
   };
 
+  const handleDeleteBanner = async (id: string) => {
+    try {
+      setIsLoading(true);
+      const data = await BannersController.deleteBanner(id);
+      toast.success(data?.message);
+      await handleGetBanners();
+      return data;
+    } catch (error: any) {
+      console.log("@Error", error);
+      toast.error(error?.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
     isLoading,
     handleGetBanners,
+    handleDeleteBanner,
   };
 };

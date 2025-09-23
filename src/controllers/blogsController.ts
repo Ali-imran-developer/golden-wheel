@@ -10,6 +10,12 @@ class BlogsController {
   static getBlogDetail(id: string) {
     return apiRequest("get", `/api/blogs/get?id=${id}`);
   }
+  static updateBlog(id: string, data: any) {
+    return apiRequest("put", `/api/blogs/update/${id}`, data);
+  }
+  static deleteBlog(id: string) {
+    return apiRequest("delete", `/api/blogs/delete/${id}`);
+  }
 }
 
 export default BlogsController;

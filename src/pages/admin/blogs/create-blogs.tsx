@@ -10,12 +10,17 @@ import { useBlogs } from "@/hooks/useBlogs";
 
 const CreateBlog = ({ initialData, open, onOpenChange }) => {
   const initialValues = initialData || blogValues;
-  const { isLoading, handleCreateBlogs } = useBlogs();
+  const { isLoading, handleCreateBlogs, handleUpdateBlogs } = useBlogs();
 
   const handleSubmit = async (values: any, { resetForm, setSubmitting }) => {
     try{
       console.log(values);
-      let response = await handleCreateBlogs(values);
+      let response;
+      if (initialData?._id) {
+        response = await handleUpdateBlogs(initialData._id, values);
+      } else {
+        response = await handleCreateBlogs(values);
+      }
       if(response?.success){
         resetForm();
         onOpenChange();
@@ -27,11 +32,15 @@ const CreateBlog = ({ initialData, open, onOpenChange }) => {
     }
   };
 
+  const handleCancel = () => {
+    onOpenChange();
+  };
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <Sheet open={open} onOpenChange={() => {}}>
       <SheetContent className="w-[90vw] max-w-3xl min-h-[90vh] overflow-y-auto">
         <SheetHeader className="mb-4">
-          <SheetTitle>Create Blog</SheetTitle>
+          <SheetTitle>{initialData?._id ? "Update Blog" : "Create Blog"}</SheetTitle>
         </SheetHeader>
 
         <Formik enableReinitialize initialValues={initialValues} validationSchema={blogSchema} onSubmit={handleSubmit}>
@@ -202,11 +211,16 @@ const CreateBlog = ({ initialData, open, onOpenChange }) => {
                 )}
               </FieldArray>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : initialData ? ("Update Blog") : ("Submit")}
-              </Button>
+              <div className="flex gap-2">
+                <Button type="button" variant="outline" onClick={handleCancel} className="flex-1" disabled={isLoading}>
+                  Cancel
+                </Button>
+                <Button type="submit" className="flex-1" disabled={isLoading}>
+                  {isLoading ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : initialData?._id ? "Update Blog" : "Create Blog"}
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>

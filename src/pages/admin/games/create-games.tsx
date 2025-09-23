@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Sheet,
   SheetContent,
@@ -16,31 +17,36 @@ import { FormField } from "@/components/ui/form-field";
 interface CreateGamesProps {
   open: boolean;
   onClose: () => void;
+  selectedGame?: any | null;
 }
 
-const CreateGames = ({ open, onClose }: CreateGamesProps) => {
-  const { isLoading, handleCreateGames } = useGames();
+const CreateGames = ({ open, onClose, selectedGame }: CreateGamesProps) => {
+  const { isLoading, handleCreateGames, handleUpdateGames } = useGames();
 
   const initialValues = {
-    name: "",
-    category: "",
-    rating: null,
-    users: null,
-    status: "",
-    imageBase64: "",
+    name: selectedGame?.name ?? "",
+    category: selectedGame?.category ?? "",
+    rating: selectedGame?.rating ?? null,
+    users: selectedGame?.users ?? null,
+    status: selectedGame?.status ?? "",
+    imageBase64: selectedGame?.imageBase64 ?? selectedGame?.image,
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema: createGameSchema,
+    enableReinitialize: true,
     onSubmit: async (values) => {
       try {
-        console.log("Form Values:", values);
-        await handleCreateGames(values);
+        if (selectedGame?._id) {
+          await handleUpdateGames(selectedGame?._id, values);
+        } else {
+          await handleCreateGames(values);
+        }
         formik.resetForm();
         onClose();
       } catch (error) {
-        console.error("Create Game Error:", error);
+        console.error("Game Submit Error:", error);
       }
     },
   });
@@ -56,10 +62,10 @@ const CreateGames = ({ open, onClose }: CreateGamesProps) => {
   };
 
   return (
-    <Sheet open={open} onOpenChange={onClose}>
+    <Sheet open={open} onOpenChange={() => {}}>
       <SheetContent side="right" className="min-h-screen overflow-y-auto">
         <SheetHeader>
-          <SheetTitle>Create Game</SheetTitle>
+          <SheetTitle>{selectedGame ? "Update Game" : "Create Game"}</SheetTitle>
         </SheetHeader>
 
         <form onSubmit={formik.handleSubmit} className="space-y-4 mt-6">
@@ -69,7 +75,7 @@ const CreateGames = ({ open, onClose }: CreateGamesProps) => {
             placeholder="Enter game name"
             value={formik.values.name}
             onChange={formik.handleChange}
-            error={formik.touched.name && formik.errors.name}
+            error={formik.touched.name && formik.errors.name as any}
           />
 
           <FormField
@@ -78,7 +84,7 @@ const CreateGames = ({ open, onClose }: CreateGamesProps) => {
             placeholder="Enter category"
             value={formik.values.category}
             onChange={formik.handleChange}
-            error={formik.touched.category && formik.errors.category}
+            error={formik.touched.category && formik.errors.category as any}
           />
 
           <FormField
@@ -107,7 +113,7 @@ const CreateGames = ({ open, onClose }: CreateGamesProps) => {
             placeholder="live / inactive"
             value={formik.values.status}
             onChange={formik.handleChange}
-            error={formik.touched.status && formik.errors.status}
+            error={formik.touched.status && formik.errors.status as any}
           />
 
           <div>
@@ -117,14 +123,16 @@ const CreateGames = ({ open, onClose }: CreateGamesProps) => {
               id="image"
               accept="image/*"
               onChange={handleFileChange}
+              disabled={selectedGame?.image}
               className={`${formik.touched.imageBase64 && formik.errors.imageBase64 ? "border border-red-600" : ""}`}
             />
             {formik.touched.imageBase64 && formik.errors.imageBase64 && (
               <p className="text-red-500 text-xs mt-1">
-                {formik.errors.imageBase64}
+                {formik.errors.imageBase64 as any}
               </p>
             )}
 
+            {console.log("formik.values", formik.values)as any}
             {formik.values.imageBase64 && (
               <img
                 src={formik.values.imageBase64}
@@ -134,13 +142,18 @@ const CreateGames = ({ open, onClose }: CreateGamesProps) => {
             )}
           </div>
 
-          <Button type="submit" disabled={isLoading} className="w-full">
-            {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin mr-2" />
-            ) : (
-              "Create Game"
-            )}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button type="button" variant="outline" disabled={isLoading} onClick={onClose} className="w-full">
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isLoading} className="w-full">
+              {isLoading ? (
+                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+              ) : (
+                selectedGame ? "Update Game" : "Create Game"
+              )}
+            </Button>
+          </div>
         </form>
       </SheetContent>
     </Sheet>

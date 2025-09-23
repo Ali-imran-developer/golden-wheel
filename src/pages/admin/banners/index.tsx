@@ -1,20 +1,29 @@
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { ensureArray } from "@/helper-functions/use-formater";
 import { useBanners } from "@/hooks/useBanners";
 import axios from "axios";
-import { Loader2, Upload } from "lucide-react";
+import { DeleteIcon, Loader2, Upload, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const PORT = import.meta.env.VITE_BACKEND_BASEURL;
 
 const Banners = () => {
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<any>(null);
-  const { handleGetBanners } = useBanners();
+  const { isLoading, handleGetBanners, handleDeleteBanner } = useBanners();
   const { bannersList } = useSelector((state: any) => state.Banners);
 
   useEffect(() => {
@@ -24,11 +33,14 @@ const Banners = () => {
   const handleFileChange = async (e: any) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
+    if (files.length > 1) {
+      console.warn("Please select only one image.");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
 
     const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append("banners_file", files[i]);
-    }
+    formData.append("banners_file", files[0]);
 
     try {
       setLoading(true);
@@ -39,7 +51,7 @@ const Banners = () => {
       );
 
       if (res.data.success) {
-        handleGetBanners(); // refresh banners after upload
+        handleGetBanners();
       } else {
         console.error("Upload failed:", res.data.message);
       }
@@ -51,7 +63,12 @@ const Banners = () => {
     }
   };
 
-  // Slider settings
+  const deleteBanner = async (id: string) => {
+    if(id){
+      handleDeleteBanner(id);
+    }
+  };
+
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -75,7 +92,6 @@ const Banners = () => {
           <input
             ref={fileInputRef}
             type="file"
-            multiple
             accept="image/*"
             onChange={handleFileChange}
             className="hidden"
@@ -95,32 +111,61 @@ const Banners = () => {
                   Uploading...
                 </>
               ) : (
-                "Upload Images"
+                "Upload Image"
               )}
             </Button>
           </div>
         </div>
       </div>
 
-      {ensureArray(bannersList)?.length === 0 ? (
+      {isLoading ? (
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-2 pb-4">
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <div key={idx} className="px-2 py-2">
+                <Skeleton className="w-full h-72 rounded-none" />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : ensureArray(bannersList)?.length === 0 ? (
         <div className="flex justify-center items-center h-32 text-gray-500 text-lg">
           No banners added
         </div>
       ) : (
-        <div className="max-w-3xl mx-auto">
-          <Slider {...sliderSettings}>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-2 pb-4">
             {ensureArray(bannersList)?.map((banner: any) =>
               banner.images?.map((img: string, idx: number) => (
-                <div key={idx} className="px-2">
+                <div key={idx} className="px-2 py-2 relative">
                   <img
                     src={img}
                     alt={`banner-${idx}`}
-                    className="rounded-2xl shadow-md w-full h-72 object-cover"
+                    className="rounded-none shadow-md w-full h-72 object-cover"
                   />
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button className="absolute top-2 right-2 rounded-none" variant="destructive">
+                        <X size={42} />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Delete banner?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This will permanently delete this banner.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => deleteBanner(banner?._id)}>Delete</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               ))
             )}
-          </Slider>
+          </div>
         </div>
       )}
     </div>

@@ -1,6 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import ProtectedRoute from "./config/ProtectedRoute";
 import { lazy, Suspense } from "react";
@@ -21,10 +19,14 @@ const BlogDetail = lazy(() => import("@/pages/BlogDetail"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const AdminLayout = lazy(() => import("@/pages/admin/layout"));
+const AdminWelcome = lazy(() => import("@/pages/admin/welcome"));
 const AdminBlogs = lazy(() => import("@/pages/admin/blogs"));
 const AdminBlogDetail = lazy(() => import("@/pages/admin/blogs/blogs-detail"));
 const AdminBanners = lazy(() => import("@/pages/admin/banners"));
 const AdminGames = lazy(() => import("@/pages/admin/games"));
+const AdminSports = lazy(() => import("@/pages/admin/sports"));
+const AdminTournaments = lazy(() => import("@/pages/admin/tournaments"));
+
 const AuthLogin = lazy(() => import("@/pages/Login"));
 
 const App = () => (
@@ -47,10 +49,13 @@ const App = () => (
             </Route>
 
             <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+              <Route path="welcome" element={<AdminWelcome />} />
               <Route path="blogs" element={<AdminBlogs />} />
               <Route path="blogs/:id" element={<AdminBlogDetail />} />
               <Route path="banners" element={<AdminBanners />} />
               <Route path="games" element={<AdminGames />} />
+              <Route path="sports" element={<AdminSports />} />
+              <Route path="tournaments" element={<AdminTournaments />} />
             </Route>
 
             <Route path="/auth/login" element={<AuthLogin />} />

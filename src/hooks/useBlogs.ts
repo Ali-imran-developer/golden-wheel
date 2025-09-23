@@ -41,6 +41,37 @@ export const useBlogs = () => {
       setIsLoading(true);
       const data = await BlogsController.createBlog(values);
       toast.success(data?.message);
+      await handleGetBlogs();
+      return data;
+    } catch (error: any) {
+      console.log("@Error", error);
+      toast.error(error?.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUpdateBlogs = async (id: string, values: any) => {
+    try {
+      setIsLoading(true);
+      const data = await BlogsController.updateBlog(id, values);
+      toast.success(data?.message);
+      await handleGetBlogs();
+      return data;
+    } catch (error: any) {
+      console.log("@Error", error);
+      toast.error(error?.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteBlogs = async (id: string) => {
+    try {
+      setIsLoading(true);
+      const data = await BlogsController.deleteBlog(id);
+      toast.success(data?.message);
+      await handleGetBlogs();
       return data;
     } catch (error: any) {
       console.log("@Error", error);
@@ -54,6 +85,8 @@ export const useBlogs = () => {
     isLoading,
     handleGetBlogs,
     handleCreateBlogs,
+    handleUpdateBlogs,
+    handleDeleteBlogs,
     handleGetBlogDetail,
   };
 };
