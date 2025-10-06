@@ -4,215 +4,153 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, TrendingUp, Users, Star } from "lucide-react";
 
 const Sports = () => {
-  const sportsEvents = [
+  const sportsCategories = [
     {
       id: 1,
-      sport: "Football",
-      league: "Premier League",
-      homeTeam: "Manchester United",
-      awayTeam: "Chelsea",
-      homeOdds: 2.1,
-      drawOdds: 3.2,
-      awayOdds: 3.8,
-      date: "Dec 16, 2024",
-      time: "15:30",
-      status: "upcoming",
-      betCount: 2847,
+      name: "Football",
+      description: "Bet on top leagues worldwide",
+      events: 847,
+      image: "⚽",
+      popular: true,
     },
     {
       id: 2,
-      sport: "Basketball",
-      league: "NBA",
-      homeTeam: "Lakers",
-      awayTeam: "Warriors",
-      homeOdds: 1.95,
-      drawOdds: null,
-      awayOdds: 1.85,
-      date: "Dec 16, 2024",
-      time: "20:00",
-      status: "live",
-      betCount: 5692,
+      name: "Basketball",
+      description: "NBA, EuroLeague & more",
+      events: 352,
+      image: "🏀",
+      popular: true,
     },
     {
       id: 3,
-      sport: "Tennis",
-      league: "ATP Masters",
-      homeTeam: "Novak Djokovic",
-      awayTeam: "Rafael Nadal",
-      homeOdds: 1.75,
-      drawOdds: null,
-      awayOdds: 2.05,
-      date: "Dec 17, 2024",
-      time: "14:00",
-      status: "upcoming",
-      betCount: 1834,
+      name: "Tennis",
+      description: "Grand Slams & ATP tours",
+      events: 234,
+      image: "🎾",
+      popular: true,
     },
     {
       id: 4,
-      sport: "Football",
-      league: "La Liga",
-      homeTeam: "Real Madrid",
-      awayTeam: "Barcelona",
-      homeOdds: 2.3,
-      drawOdds: 3.1,
-      awayOdds: 3.2,
-      date: "Dec 18, 2024",
-      time: "21:00",
-      status: "upcoming",
-      betCount: 8394,
+      name: "Ice Hockey",
+      description: "NHL and international games",
+      events: 156,
+      image: "🏒",
+      popular: false,
     },
     {
       id: 5,
-      sport: "Boxing",
-      league: "Heavyweight",
-      homeTeam: "Anthony Joshua",
-      awayTeam: "Tyson Fury",
-      homeOdds: 2.8,
-      drawOdds: 15.0,
-      awayOdds: 1.4,
-      date: "Dec 20, 2024",
-      time: "22:00",
-      status: "upcoming",
-      betCount: 12847,
+      name: "Baseball",
+      description: "MLB & World Series",
+      events: 189,
+      image: "⚾",
+      popular: false,
     },
     {
       id: 6,
-      sport: "Ice Hockey",
-      league: "NHL",
-      homeTeam: "Rangers",
-      awayTeam: "Bruins",
-      homeOdds: 2.1,
-      drawOdds: 3.8,
-      awayOdds: 3.1,
-      date: "Dec 16, 2024",
-      time: "19:30",
-      status: "live",
-      betCount: 743,
+      name: "Boxing",
+      description: "Championship fights",
+      events: 42,
+      image: "🥊",
+      popular: false,
+    },
+    {
+      id: 7,
+      name: "American Football",
+      description: "NFL & College Football",
+      events: 98,
+      image: "🏈",
+      popular: true,
+    },
+    {
+      id: 8,
+      name: "Cricket",
+      description: "IPL, World Cup & Tests",
+      events: 267,
+      image: "🏏",
+      popular: true,
+    },
+    {
+      id: 9,
+      name: "Golf",
+      description: "PGA Tour & Majors",
+      events: 73,
+      image: "⛳",
+      popular: false,
     },
   ];
-
-  const sportsCategories = ["All Sports", "Football", "Basketball", "Tennis", "Boxing", "Ice Hockey"];
-  const betTypes = ["Match Winner", "Over/Under", "Handicap", "Both Teams to Score"];
 
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-casino-darker to-casino-dark py-16">
+      <section className="bg-gradient-to-r from-casino-darker to-casino-dark py-12 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
             Sports Betting
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             Bet on your favorite sports with competitive odds and live betting
           </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            {sportsCategories.map((category) => (
-              <Button
-                key={category}
-                variant={category === "All Sports" ? "casino" : "casino-outline"}
-                size="sm"
+        </div>
+      </section>
+
+      {/* Stats Banner */}
+      <section className="bg-primary/10 py-6 md:py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <div className="text-2xl md:text-3xl font-bold text-primary">2,358</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Live Events</div>
+            </div>
+            <div>
+              <div className="text-2xl md:text-3xl font-bold text-primary">40+</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Sports Available</div>
+            </div>
+            <div>
+              <div className="text-2xl md:text-3xl font-bold text-primary">95%</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Average Payout</div>
+            </div>
+            <div>
+              <div className="text-2xl md:text-3xl font-bold text-primary">24/7</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Live Support</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sports Categories Grid */}
+      <section className="py-12 md:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
+            Choose Your Sport
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {sportsCategories.map((sport) => (
+              <Card 
+                key={sport.id} 
+                className="game-card hover:scale-105 transition-transform duration-300 cursor-pointer"
               >
-                {category}
-              </Button>
-            ))}
-          </div>
-          <div className="flex flex-wrap justify-center gap-2">
-            {betTypes.map((type) => (
-              <Badge key={type} variant="secondary" className="px-3 py-1">
-                {type}
-              </Badge>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Live Events Banner */}
-      <section className="bg-primary/10 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center space-x-4 text-center">
-            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-            <span className="text-foreground font-semibold">
-              2 Live Events • Place your bets now!
-            </span>
-            <Button variant="casino" size="sm">
-              View Live
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Events Grid */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-6">
-            {sportsEvents.map((event) => (
-              <Card key={event.id} className="game-card">
-                <CardContent className="p-6">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-                    {/* Event Info */}
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <Badge 
-                          variant={event.status === "live" ? "default" : "secondary"}
-                          className={event.status === "live" ? "bg-red-600" : "bg-blue-600"}
-                        >
-                          {event.status === "live" ? "LIVE" : "UPCOMING"}
-                        </Badge>
-                        <span className="text-sm text-muted-foreground">{event.sport}</span>
-                        <span className="text-sm text-muted-foreground">•</span>
-                        <span className="text-sm text-muted-foreground">{event.league}</span>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                        <div className="text-right">
-                          <h3 className="text-lg font-semibold text-foreground">
-                            {event.homeTeam}
-                          </h3>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-sm text-muted-foreground">VS</div>
-                          <div className="flex items-center justify-center space-x-2 mt-1">
-                            <Clock className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-sm text-muted-foreground">
-                              {event.date} {event.time}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="text-left">
-                          <h3 className="text-lg font-semibold text-foreground">
-                            {event.awayTeam}
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Betting Odds */}
-                    <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
-                      <div className="grid grid-cols-3 gap-2 lg:grid-cols-1 lg:gap-2">
-                        <Button variant="casino-outline" size="sm" className="flex flex-col h-auto py-2">
-                          <span className="text-xs opacity-70">Home</span>
-                          <span className="font-bold">{event.homeOdds}</span>
-                        </Button>
-                        {event.drawOdds && (
-                          <Button variant="casino-outline" size="sm" className="flex flex-col h-auto py-2">
-                            <span className="text-xs opacity-70">Draw</span>
-                            <span className="font-bold">{event.drawOdds}</span>
-                          </Button>
-                        )}
-                        <Button variant="casino-outline" size="sm" className="flex flex-col h-auto py-2">
-                          <span className="text-xs opacity-70">Away</span>
-                          <span className="font-bold">{event.awayOdds}</span>
-                        </Button>
-                      </div>
-                      <div className="text-center lg:text-left">
-                        <div className="flex items-center justify-center lg:justify-start space-x-1 text-sm text-muted-foreground">
-                          <Users className="h-4 w-4" />
-                          <span>{event.betCount} bets</span>
-                        </div>
-                        <Button variant="casino" size="sm" className="mt-2 w-full lg:w-auto">
-                          More Markets
-                        </Button>
-                      </div>
-                    </div>
+                <CardContent className="p-6 md:p-8">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="text-4xl md:text-5xl">{sport.image}</div>
+                    {sport.popular && (
+                      <Badge variant="default" className="bg-primary">
+                        Popular
+                      </Badge>
+                    )}
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+                    {sport.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {sport.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">
+                      {sport.events} events
+                    </span>
+                    <Button variant="casino" size="sm">
+                      Bet Now
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -222,11 +160,11 @@ const Sports = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-casino-accent">
+      <section className="py-12 md:py-16 bg-casino-accent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Bet With Us?
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-4">
+              Why Bet With Beijing?
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -234,22 +172,28 @@ const Sports = () => {
               <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Best Odds</h3>
-              <p className="text-muted-foreground">Competitive odds across all major sports</p>
+              <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">Best Odds</h3>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Competitive odds across all major sports
+              </p>
             </div>
             <div className="text-center">
               <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Clock className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Live Betting</h3>
-              <p className="text-muted-foreground">Place bets while the action unfolds</p>
+              <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">Live Betting</h3>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Place bets while the action unfolds
+              </p>
             </div>
             <div className="text-center">
               <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Expert Analysis</h3>
-              <p className="text-muted-foreground">Get insights from sports betting experts</p>
+              <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">Expert Analysis</h3>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Get insights from sports betting experts
+              </p>
             </div>
           </div>
         </div>

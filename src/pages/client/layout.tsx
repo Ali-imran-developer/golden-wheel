@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "./header";
 import Footer from "./footer";
+import SignupModal from "@/components/SignupModal";
 
 function ClientLayout() {
   return (
@@ -9,6 +10,7 @@ function ClientLayout() {
       <main className="flex flex-col w-full">
         <Outlet />
       </main>
+      <SignupModal />
       <Footer />
     </div>
   );

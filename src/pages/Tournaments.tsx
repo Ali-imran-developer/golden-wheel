@@ -128,20 +128,21 @@ const Tournaments = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-casino-darker to-casino-dark py-16">
+      <section className="bg-gradient-to-r from-casino-darker to-casino-dark py-12 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
-            Tournaments
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
+            Elite Tournaments
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Compete with players worldwide in exciting tournaments with massive prize pools
+          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Compete with the best players worldwide for massive prize pools
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
             {gameTypes.map((type) => (
               <Button
                 key={type}
                 variant={type === "All Games" ? "casino" : "casino-outline"}
                 size="sm"
+                className="text-xs md:text-sm"
               >
                 {type}
               </Button>
@@ -151,37 +152,40 @@ const Tournaments = () => {
       </section>
 
       {/* Stats Banner */}
-      <section className="bg-primary/10 py-8">
+      <section className="bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 py-6 md:py-10 border-y border-primary/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-primary">$525K</div>
-              <div className="text-sm text-muted-foreground">Total Prize Pool</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
+            <div className="space-y-1">
+              <div className="text-2xl md:text-4xl font-bold text-primary">$525K</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Total Prize Pool</div>
             </div>
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-primary">6</div>
-              <div className="text-sm text-muted-foreground">Active Tournaments</div>
+            <div className="space-y-1">
+              <div className="text-2xl md:text-4xl font-bold text-primary">6</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Active Tournaments</div>
             </div>
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-primary">994</div>
-              <div className="text-sm text-muted-foreground">Players Registered</div>
+            <div className="space-y-1">
+              <div className="text-2xl md:text-4xl font-bold text-primary">994</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Players Registered</div>
             </div>
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-primary">1</div>
-              <div className="text-sm text-muted-foreground">Live Now</div>
+            <div className="space-y-1">
+              <div className="text-2xl md:text-4xl font-bold text-primary">1</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Live Now</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Tournaments Grid */}
-      <section className="py-16">
+      <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
+            Featured Tournaments
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {tournaments.map((tournament) => (
-              <Card key={tournament.id} className="game-card overflow-hidden">
+              <Card key={tournament.id} className="game-card overflow-hidden hover:scale-105 transition-transform duration-300">
                 <div className="relative">
-                  <div className="aspect-video bg-casino-accent"></div>
+                  <div className="aspect-video bg-gradient-to-br from-casino-darker via-casino-dark to-casino-accent"></div>
                   <div className="absolute top-4 left-4">
                     <Badge className={getStatusColor(tournament.status)}>
                       {getStatusText(tournament.status)}
