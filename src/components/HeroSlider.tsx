@@ -1,15 +1,23 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Link, useNavigate } from "react-router-dom";
 import { useBanners } from "@/hooks/useBanners";
 import { useSelector } from "react-redux";
 import { ensureArray } from "@/helper-functions/use-formater";
+
+const banners = [
+  "/banner/banner1.jpg",
+  "/banner/banner2.jpg",
+  "/banner/banner3.jpg",
+  "/banner/banner4.jpg",
+  "/banner/banner5.jpg",
+]
 
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { isLoading, handleGetBanners } = useBanners();
   const { bannersList } = useSelector((state: any) => state.Banners);
+  const displayBanners = isLoading || !bannersList?.length ? banners : bannersList;
 
   useEffect(() => {
     handleGetBanners();
@@ -18,27 +26,30 @@ const HeroSlider = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % bannersList?.length);
+      setCurrentSlide((prev) => (prev + 1) % displayBanners?.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [bannersList.length]);
+  }, [displayBanners.length]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % bannersList?.length);
+    setCurrentSlide((prev) => (prev + 1) % displayBanners?.length);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + bannersList?.length) % bannersList?.length);
+    setCurrentSlide((prev) => (prev - 1 + displayBanners?.length) % displayBanners?.length);
   };
 
   return (
     <div className="relative h-[300px] overflow-hidden">
-      {ensureArray(bannersList)?.map((slide: any, index: number) => (
-        <div key={index} className={cn("absolute inset-0 transition-opacity duration-1000", index === currentSlide ? "opacity-100" : "opacity-0")}>
-          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${slide?.images[0]})` }} />
-        </div>
-      ))}
+      {ensureArray(displayBanners)?.map((slide: any, index: number) => {
+        const imageUrl = typeof slide === 'string' ? slide : slide?.images?.[0];
+        return (
+          <div key={index} className={cn("absolute inset-0 transition-opacity duration-1000", index === currentSlide ? "opacity-100" : "opacity-0")}>
+            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${imageUrl})` }} />
+          </div>
+        );
+      })}
 
       <button
         onClick={prevSlide}
@@ -54,17 +65,8 @@ const HeroSlider = () => {
       </button>
 
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
-        {ensureArray(bannersList)?.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={cn(
-              "w-3 h-3 rounded-full casino-transition",
-              index === currentSlide
-                ? "bg-primary"
-                : "bg-white/30 hover:bg-white/50"
-            )}
-          />
+        {ensureArray(displayBanners)?.map((_, index) => (
+          <button key={index} onClick={() => setCurrentSlide(index)} className={cn("w-3 h-3 rounded-full casino-transition", index === currentSlide ? "bg-primary" : "bg-white/30 hover:bg-white/50")} />
         ))}
       </div>
     </div>

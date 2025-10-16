@@ -13,6 +13,9 @@ const FAQ = lazy(() => import("@/pages/FAQ"));
 const LiveCasino = lazy(() => import("@/pages/LiveCasino"));
 const Sports = lazy(() => import("@/pages/Sports"));
 const Tournaments = lazy(() => import("@/pages/Tournaments"));
+const Events = lazy(() => import("@/pages/Events"));
+const Promotions = lazy(() => import("@/pages/Promotions"));
+const HelpCenter = lazy(() => import("@/pages/HelpCenter"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const Blogs = lazy(() => import("@/pages/Blogs"));
 const BlogDetail = lazy(() => import("@/pages/BlogDetail"));
@@ -39,7 +42,10 @@ const App = () => (
               <Route path="about" element={<About />} />
               <Route path="live-casino" element={<LiveCasino />} />
               <Route path="sports" element={<Sports />} />
+              <Route path="events" element={<Events />} />
               <Route path="tournaments" element={<Tournaments />} />
+              <Route path="promotions" element={<Promotions />} />
+              <Route path="help-center" element={<HelpCenter />} />
               <Route path="contact" element={<Contact />} />
               <Route path="blogs" element={<Blogs />} />
               <Route path="blogs/:id" element={<BlogDetail />} />

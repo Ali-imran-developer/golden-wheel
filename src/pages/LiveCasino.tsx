@@ -1,103 +1,40 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Play, Users, Star, Clock } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Users, Star, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useGames } from "@/hooks/useGames";
+import { useSelector } from "react-redux";
+import { ensureArray } from "@/helper-functions/use-formater";
 
 const LiveCasino = () => {
-  const liveGames = [
-    {
-      id: 1,
-      title: "Live Blackjack Premium",
-      dealer: "Sarah Williams",
-      players: 8,
-      maxPlayers: 8,
-      minBet: "$5",
-      maxBet: "$500",
-      image: "/api/placeholder/400/300",
-      status: "active",
-      rating: 4.9,
-    },
-    {
-      id: 2,
-      title: "European Roulette",
-      dealer: "Marcus Chen",
-      players: 12,
-      maxPlayers: 15,
-      minBet: "$1",
-      maxBet: "$1000",
-      image: "/api/placeholder/400/300",
-      status: "active",
-      rating: 4.8,
-    },
-    {
-      id: 3,
-      title: "Baccarat VIP",
-      dealer: "Elena Rodriguez",
-      players: 5,
-      maxPlayers: 7,
-      minBet: "$25",
-      maxBet: "$2500",
-      image: "/api/placeholder/400/300",
-      status: "active",
-      rating: 4.9,
-    },
-    {
-      id: 4,
-      title: "Three Card Poker",
-      dealer: "James Mitchell",
-      players: 6,
-      maxPlayers: 8,
-      minBet: "$10",
-      maxBet: "$200",
-      image: "/api/placeholder/400/300",
-      status: "active",
-      rating: 4.7,
-    },
-    {
-      id: 5,
-      title: "Lightning Roulette",
-      dealer: "Anna Kowalski",
-      players: 20,
-      maxPlayers: 25,
-      minBet: "$0.50",
-      maxBet: "$500",
-      image: "/api/placeholder/400/300",
-      status: "active",
-      rating: 4.8,
-    },
-    {
-      id: 6,
-      title: "Speed Blackjack",
-      dealer: "Michael Zhang",
-      players: 7,
-      maxPlayers: 7,
-      minBet: "$2",
-      maxBet: "$150",
-      image: "/api/placeholder/400/300",
-      status: "waiting",
-      rating: 4.6,
-    },
-  ];
+  const { isLoading, handleGetGames } = useGames();
+  const { gamesList } = useSelector((state: any) => state.Games);
+
+  useEffect(() => {
+    handleGetGames();
+  }, []);
 
   const categories = ["All Games", "Blackjack", "Roulette", "Baccarat", "Poker"];
 
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-casino-darker to-casino-dark py-16">
+      <section className="bg-gradient-to-r from-casino-darker to-casino-dark py-12 md:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3 md:mb-4">
             Live Casino
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 md:mb-8 max-w-3xl mx-auto px-4">
             Experience the thrill of real casino action with professional dealers in real-time
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
             {categories.map((category) => (
               <Button
                 key={category}
                 variant={category === "All Games" ? "casino" : "casino-outline"}
                 size="sm"
+                className="text-xs sm:text-sm px-3 sm:px-4"
               >
                 {category}
               </Button>
@@ -107,89 +44,103 @@ const LiveCasino = () => {
       </section>
 
       {/* Live Games Grid */}
-      <section className="py-16">
+      <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {liveGames.map((game) => (
-              <Card key={game.id} className="game-card overflow-hidden">
-                <div className="relative">
-                  <div className="aspect-video bg-casino-accent"></div>
-                  <div className="absolute top-4 left-4">
-                    <Badge 
-                      variant={game.status === "active" ? "default" : "secondary"}
-                      className={game.status === "active" ? "bg-green-600" : "bg-orange-500"}
-                    >
-                      {game.status === "active" ? "Live" : "Starting Soon"}
-                    </Badge>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+            {isLoading ? (
+              Array.from({ length: 8 }).map((_, idx) => (
+                <div key={idx} className="game-card">
+                  <div className="relative overflow-hidden rounded-t-xl">
+                    <Skeleton className="w-full h-48 sm:h-56 lg:h-60" />
                   </div>
-                  <div className="absolute top-4 right-4 flex items-center bg-black/70 px-2 py-1 rounded">
-                    <Star className="h-4 w-4 text-yellow-400 mr-1" />
-                    <span className="text-white text-sm">{game.rating}</span>
-                  </div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="bg-black/70 rounded-lg p-3 text-white">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center">
-                          <Users className="h-4 w-4 mr-1" />
-                          <span className="text-sm">{game.players}/{game.maxPlayers}</span>
-                        </div>
-                        <div className="text-sm">
-                          {game.minBet} - {game.maxBet}
-                        </div>
-                      </div>
-                      <div className="text-sm opacity-90">Dealer: {game.dealer}</div>
+                  <div className="p-4 sm:p-6 space-y-3">
+                    <Skeleton className="h-6 w-3/4" />
+                    <div className="flex items-center justify-between">
+                      <Skeleton className="h-4 w-16" />
+                      <Skeleton className="h-4 w-20" />
                     </div>
                   </div>
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold text-foreground mb-3">
-                    {game.title}
-                  </h3>
-                  <Button 
-                    variant="casino" 
-                    size="lg" 
-                    className="w-full"
-                    disabled={game.status !== "active"}
-                  >
-                    <Play className="mr-2 h-4 w-4" />
-                    {game.status === "active" ? "Join Game" : "Waiting..."}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+              ))
+            ) : (
+              ensureArray(gamesList)?.map((game) => (
+                <div key={game?._id} className="game-card group cursor-pointer">
+                  <div className="relative overflow-hidden rounded-t-xl">
+                    <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} className="cursor-pointer">
+                      <div className="w-full h-48 sm:h-56 lg:h-60">
+                        <img
+                          src={game?.image ?? ""}
+                          alt={game?.name ?? ""}
+                          className="w-full h-full object-cover group-hover:scale-110 casino-transition duration-700"
+                        />
+                      </div>
+                    </Link>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 casino-transition">
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`}>
+                          <Button variant="hero" size="sm" className="w-full">
+                            Play Now
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 sm:p-6">
+                    <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`}>
+                      <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 hover:text-yellow-400 line-clamp-1">
+                        {game?.name ?? ""}
+                      </h3>
+                    </Link>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-1">
+                        <Star className="h-4 w-4 text-primary fill-current" />
+                        <span className="text-sm font-medium text-foreground">
+                          {game.rating}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                        <Users className="h-4 w-4" />
+                        <span>{game.users}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-casino-accent">
+      <section className="py-12 md:py-16 lg:py-20 bg-casino-accent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 md:mb-4">
               Why Choose Our Live Casino?
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="h-8 w-8 text-primary" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+            <div className="text-center p-4">
+              <div className="bg-primary/10 w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                <Clock className="h-7 w-7 md:h-8 md:w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">24/7 Live Action</h3>
-              <p className="text-muted-foreground">Round-the-clock gaming with professional dealers</p>
+              <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">24/7 Live Action</h3>
+              <p className="text-sm md:text-base text-muted-foreground">Round-the-clock gaming with professional dealers</p>
             </div>
-            <div className="text-center">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-primary" />
+            <div className="text-center p-4">
+              <div className="bg-primary/10 w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                <Users className="h-7 w-7 md:h-8 md:w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Social Gaming</h3>
-              <p className="text-muted-foreground">Chat and interact with dealers and other players</p>
+              <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">Social Gaming</h3>
+              <p className="text-sm md:text-base text-muted-foreground">Chat and interact with dealers and other players</p>
             </div>
-            <div className="text-center">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Star className="h-8 w-8 text-primary" />
+            <div className="text-center p-4 sm:col-span-2 md:col-span-1">
+              <div className="bg-primary/10 w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                <Star className="h-7 w-7 md:h-8 md:w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">HD Streaming</h3>
-              <p className="text-muted-foreground">Crystal clear video quality for immersive experience</p>
+              <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">HD Streaming</h3>
+              <p className="text-sm md:text-base text-muted-foreground">Crystal clear video quality for immersive experience</p>
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ export const useTournaments = () => {
     try {
       setIsLoading(true);
       const data = await TournamentsController.getAllTournament();
+      console.log(data);
       dispatch(setTournamentsData(data?.data));
       return data;
     } catch (error: any) {

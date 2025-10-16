@@ -79,7 +79,7 @@ const GameSlider = () => {
               <div key={game?._id} className="flex-shrink-0 w-80 game-card group cursor-pointer">
                 <div className="relative overflow-hidden rounded-t-xl">
                   <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} className="cursor-pointer">
-                    <div className="max-w-lg h-48">
+                    <div className="max-w-lg h-60">
                       <img
                         src={game?.image ?? ""}
                         alt={game?.name ?? ""}

@@ -40,7 +40,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-16">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="py-16 bg-casino-dark">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">

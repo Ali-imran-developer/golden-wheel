@@ -5,6 +5,7 @@ import bannersReducer from "./banner-slice";
 import gamesReducer from "./games-slice";
 import welcomeReducer from "./welcome-slice";
 import sportsReducer from "./sports-slice";
+import tournamentsReducer from "./tournaments-slice";
 
 const rootReducer = combineReducers({
   User: userReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   Games: gamesReducer,
   Welcome: welcomeReducer,
   Sports: sportsReducer,
+  Tournaments: tournamentsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

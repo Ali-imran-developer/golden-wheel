@@ -8,25 +8,25 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Live Casino", path: "/live-casino" },
-    { name: "Sports", path: "/sports" },
-    { name: "Tournaments", path: "/tournaments" },
-    { name: "Contact", path: "/contact" },
-    { name: "Blogs", path: "/blogs" },
-    { name: "FAQ", path: "/faq" },
-  ];
-
   const mainNavItems = [
     { name: "Home", path: "/" },
+    { name: "Sports", path: "/sports" },
+    { name: "Live Casino", path: "/live-casino" },
+  ];
+
+  const mobileNavItems = [
+    { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Live Casino", path: "/live-casino" },
     { name: "Sports", path: "/sports" },
+    { name: "Events", path: "/events" },
+    { name: "Tournaments", path: "/tournaments" },
+    { name: "Promotions", path: "/promotions" },
+    { name: "Blogs", path: "/blogs" },
+    { name: "Help Center", path: "/help-center" },
+    { name: "Contact", path: "/contact" },
+    { name: "FAQ", path: "/faq" },
   ];
-
-  const mobileNavItems = navItems;
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -56,15 +56,23 @@ const Navigation = () => {
             ))}
           </div>
 
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:flex items-center space-x-4">
-              <Link to="/login">
-                <Button variant="casino-outline" size="lg">
+          <div className="flex items-center space-x-2 md:space-x-4">
+            <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+              <a 
+                href="https://dashboard.beijing.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-muted-foreground hover:text-primary casino-transition"
+              >
+                My Account
+              </a>
+              <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} className="cursor-pointer">
+                <Button variant="casino-outline" size="sm" className="text-sm">
                   Login
                 </Button>
               </Link>
-              <Link to="/register">
-                <Button variant="casino" size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold animate-bounce">
+              <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} className="cursor-pointer">
+                <Button  variant="casino"  size="sm"  className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-lg shadow-primary/50 text-sm md:text-base px-4 md:px-6">
                   Sign Up
                 </Button>
               </Link>
@@ -72,7 +80,7 @@ const Navigation = () => {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 rounded-md text-foreground hover:text-primary casino-transition"
+              className="p-2 rounded-md text-foreground hover:text-primary casino-transition"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -80,14 +88,14 @@ const Navigation = () => {
         </div>
 
         {isOpen && (
-          <div className="lg:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-casino-dark rounded-lg mt-2 mb-4">
+          <div className="border-t border-border mt-2">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-casino-dark/50 rounded-lg mt-2 mb-4">
               {mobileNavItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
                   className={cn(
-                    "block px-3 py-2 rounded-md text-base font-medium casino-transition",
+                    "block px-3 py-2 rounded-md text-sm font-medium casino-transition",
                     isActive(item.path)
                       ? "text-primary bg-primary/10"
                       : "text-muted-foreground hover:text-primary hover:bg-muted"
@@ -97,14 +105,14 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="pt-3 space-y-2">
-                <Link to="/login" onClick={() => setIsOpen(false)}>
+              <div className="pt-3 space-y-2 border-t border-border mt-2">
+                <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} className="cursor-pointer">
                   <Button variant="casino-outline" size="sm" className="w-full">
                     Login
                   </Button>
                 </Link>
-                <Link to="/register" onClick={() => setIsOpen(false)}>
-                  <Button variant="casino" size="sm" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold">
+                <Link to={`https://bj07p15aff2020.com/af/42GO1E27/join`} className="cursor-pointer">
+                  <Button variant="casino" size="sm" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold">
                     Sign Up
                   </Button>
                 </Link>
